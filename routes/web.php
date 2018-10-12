@@ -15,3 +15,7 @@ Route::get('/','PagesController@index');
 Route::get('/about','PagesController@about');
 
 Route::resource('costs','CostsController');
+
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
