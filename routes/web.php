@@ -13,7 +13,7 @@
 
 Route::get('/','PagesController@index');
 Route::get('/about','PagesController@about');
-
+Route::get('/admin','EstimateController@index')->name('admin');
 Route::resource('costs','CostsController');
 
 Auth::routes();

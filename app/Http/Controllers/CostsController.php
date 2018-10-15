@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Cost;
 
@@ -15,8 +16,12 @@ class CostsController extends Controller
     public function index()
     {
         
-        $costs =  Cost::all();
-        return view('costs.index')->with('costs',$costs);
+        $fingersize =  DB::table('fingersize')->get();
+        $carat =  DB::table('carat')->get();
+        $diamond =  DB::table('diamond')->get();
+        $style =  DB::table('style')->get();
+        
+        return view('costs.index')->with('fingersize',$fingersize)->with('carat', $carat)->with('diamond', $diamond)->with('style', $style);
     
     }
 
