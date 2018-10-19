@@ -21,8 +21,7 @@ class CostsController extends Controller
         $diamond =  DB::table('diamond')->get();
         $style =  DB::table('style')->get();
         
-        $ctjson = json_encode($carat);
-        return view('costs.index')->with('fingersize',$fingersize)->with('carat', $carat)->with('diamond', $diamond)->with('style', $style)->with('ctjson',$ctjson);
+        return view('costs.index')->with('fingersize',$fingersize)->with('carat', $carat)->with('diamond', $diamond)->with('style', $style);
     
     }
 
