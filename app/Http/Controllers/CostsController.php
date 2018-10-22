@@ -18,10 +18,10 @@ class CostsController extends Controller
         
         $fingersize =  DB::table('fingersize')->get();
         $carat =  DB::table('carat')->get();
-        $diamond =  DB::table('diamond')->get();
+        $diamond =  DB::getSchemaBuilder()->getColumnListing('diamond');
         $style =  DB::table('style')->get();
         
-        $ctjson = json_encode($carat);
+        $ctjson = ['hardik'=>'jivani'];
         return view('costs.index')->with('fingersize',$fingersize)->with('carat', $carat)->with('diamond', $diamond)->with('style', $style)->with('ctjson',$ctjson);
     
     }

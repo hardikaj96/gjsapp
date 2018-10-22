@@ -23,10 +23,11 @@
     <div id="app">
         @include('inc.navbar')
         <div class ="container">
-
+            <div class="border rounded">
         <main class="py-4">
             @yield('content')
             </main>
+        </div>
         </div>
     </div>
 </body>
