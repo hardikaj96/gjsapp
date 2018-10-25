@@ -1,8 +1,12 @@
 @extends('layouts.app1')
 @section('content')
-        
+        @include('footer')
         <script>
                 function enable(){
+                       
+                        
+                        alert(window.ring_style);  
+                        alert(window.costs);     
                         var fs = document.getElementById("fs_select").value;
                         var cs = document.getElementById("cs_select").value;  
                         var stones = 2;
@@ -112,7 +116,8 @@
                         var m = nmm.indexOf('c');
                         var nm = nmm.substring(n+1,m);
                         var select1 = document.getElementById('stone_select').value;
-                        document.getElementById('total_carat_weight').value = select1 *nm ;
+                        document.getElementById('total_carat_weight').value = + (select1 *nm) ;
+                        //('\xB1')+' '
                 }
                 
                 function draw(pcselect){
@@ -128,7 +133,7 @@
                         context.beginPath();
                         context.arc(x, y, 120, 0, 2*Math.PI, counterClockwise);
                         context.lineWidth = 0;
-                        context.fillStyle = 'grey';
+                        context.fillStyle = '#BFB6B4';
                         context.fill();
                         context.beginPath();
                         context.arc(x, y, 100, 0, 2*Math.PI, counterClockwise);
@@ -138,7 +143,7 @@
                         context.beginPath();
                         context.arc(x, y, 110, startAngle, endAngle, counterClockwise);
                         context.lineWidth = 20;
-                        context.strokeStyle = 'yellow';
+                        context.strokeStyle = 'Red';
                         context.stroke();
                 }
                 function cost(){
@@ -219,16 +224,17 @@
                                         
                                 </div>
                                 <div class="form-group">
+                                        <div class='text-center'>
                                         <div class="border rounded">
-                                                <H3 align="center">Estimated Prices</H3>
+                                                <H3>Estimated Prices</H3>
                                                 <table class="table">
                                                         
                                                         <thead>
                                                                 <tr>
-                                                                <th scope="col">Setting</th>
+                                                                <th scope="col">Setting Cost</th>
                                                                 <th scope="col">14K</th>
                                                                 <th scope="col">18K</th>
-                                                                <th scope="col">Platinum</th>
+                                                                <th scope="col">Plat</th>
                                                                 </tr>
                                                         </thead>
                                                         <tbody>
@@ -240,10 +246,10 @@
                                                                 </tr>
                                                         </tbody>
                                                 </table> 
-                                                <HR>
+                                                
                                         </div>
+                                        <br>
                                         <div class="border rounded">
-                                                <HR>
                                                 
                                                 <H3>Total Cost</H3>
                                                 <table class="table">
@@ -251,7 +257,7 @@
                                                                 <tr>
                                                                 <th scope="col">14K</th>
                                                                 <th scope="col">18K</th>
-                                                                <th scope="col">Platinum</th>
+                                                                <th scope="col">Plat</th>
                                                                 </tr>
                                                         </thead>
                                                         <tbody>
@@ -264,13 +270,10 @@
                                                 </table>  
                                         </div>
                                 </div>
+                                </div>
                         </div>
                 </div>
         </b>
         </FORM>
-<p id="text1"></p>
-        <p id="text2"></p>
-        <p id="text3"></p>
-        <p id="text4"></p>
-        <p id="text5"></p>
+        
 @endsection
