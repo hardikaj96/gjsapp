@@ -22,11 +22,14 @@ class CostsController extends Controller
         $diamond =  DB::getSchemaBuilder()->getColumnListing('diamond');
         $stylet =  DB::table('style')->get();
         $diamall = DB::table('diamond')->get()->all();
-        $styles = DB::table('style')->pluck('stylename');
-        $ringcost = DB::table('style')->pluck('cost');
+        $result = DB::table('diamond')->get();
         Javascript::put([
-            'ring_style'=>$styles,
-            'costs'=>$ringcost
+            'ring_style'=>DB::table('style')->pluck('stylename'),
+            'costs'=> DB::table('style')->pluck('cost'),
+            'diamond_size'=> DB::table('diamond')->pluck('diamond_size'),
+            'VS2_SI1'=> DB::table('diamond')->pluck('VS2_SI1'),
+            'SI2'=> DB::table('diamond')->pluck('SI2'),
+            'Color'=> DB::table('diamond')->pluck('Color')
         ]);
         return view('costs.index')->with('fingersize',$fingersize)->with('carat', $carat)->with('diamond', $diamond)->with('stylet', $stylet);
     
@@ -41,7 +44,10 @@ class CostsController extends Controller
     {
         return view('costs.create');
     }
-
+    public function admin()
+    {
+        return view('costs.admin');
+    }
     /**
      * Store a newly created resource in storage.
      *

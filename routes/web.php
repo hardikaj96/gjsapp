@@ -11,11 +11,13 @@
 |
 */
 
+
+
 Route::get('/','PagesController@index');
 Route::get('/about','PagesController@about');
 Route::get('/admin','EstimateController@index')->name('admin');
+Route::get('/admin','CostsController@admin')->name('admin');
 Route::resource('costs','CostsController');
 
 Auth::routes();
-
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
