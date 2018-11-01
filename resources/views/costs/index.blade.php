@@ -104,7 +104,7 @@
                         var image_path='/images/'+rs+'.jpg';
                         x.setAttribute("src", image_path);
                         document.getElementById('main_title').textContent = rs;
-                        
+                        estimate();
                 }
                 
                 function total_ct(){
@@ -124,6 +124,7 @@
                         var select1 = document.getElementById('stone_select').value;
                         document.getElementById('total_carat_weight').value =  (select1 *nm) ;
                         //('\xB1')+' '
+                        
                 }
                 
                 function draw(pcselect){
@@ -152,18 +153,34 @@
                         context.strokeStyle = 'Red';
                         context.stroke();
                 }
+                function strcmp(a, b) {
+                        
+                        alert(a.toString() + ' gg ' + b.toString());
+                        if (a.toString() == b.toString()){
+                                alert('equals');
+                                return 0;
+                        } 
+                        if (a.toString() > b.toString()) return 1;
+                        alert(a.toString() + ' gg ' + b.toString());
+                        return -1;
+                        }
                 function estimate(){
                         //alert(ring_style);
                         var i=0;
                         var gold = 1200;
                         var st = document.getElementById('st_select').value;
+                        //alert(st);
                         var fsv = document.getElementById('fs_select').value;
+                        //alert(fsv);
                         var dsv = document.getElementById('cs_select').value;
+                        //alert(dsv);
                         var ss = document.getElementById('stone_select').value;
+                        //alert(ss);
                         var ds = document.getElementById('diamond_style').value;
+                        //alert(ds);
                 
                         //alert(ds);
-                        fsv = fsv * 3.14;
+                        //fsv = fsv * 3.14;
                         var d_radius=fsv/2;
                         //alert(fsv);
                         var inner_area = (3.14 * d_radius * d_radius);
@@ -176,15 +193,23 @@
                         var fsvolume = total_area * (parseFloat(dsv)+0.5);
                         //alert(fsvolume);
                         var gwt = (fsvolume * 0.019 * 14)/24;
-                        //alert(gwt);
+                        alert(gwt);
                         var gcost = gold *1.02*0.0188;
-                        //alert(gcost);
+                        //alert(gcost + ' gcost');
+                        //alert(st);
                         var loc=0;
-                        for(i=0;i<ring_style.length;$i++){
-                                if(ring_style[i] == st){
-                                        loc = i;
+                        for(i=0;i<ring_style.length;i++){
+                                //alert(ring_style[i+1]+' hi '+st);
+                                //var n = strcmp(ring_style[i],st);
+                                //alert(ring_style[i].toString() + ' ss ' + st.toString());
+                                var n=st.toString().localeCompare(ring_style[i].toString());
+                                //alert(n);
+                                if(n===0){
+                                        loc=i;
                                         break;
                                 }
+                                else    
+                                        continue;
                         }
                         dst = costs[loc];
                         //alert(dst);
@@ -216,9 +241,9 @@
                         //alert(m18);
                         var plat = Math.floor(gwt * 1.85 * 50);
                         //alert(plat);
-                        m14 = m14 +parseFloat(diamond_cost);
-                        m18 = m18 +parseFloat(diamond_cost);
-                        plat = plat +parseFloat(diamond_cost);
+                        //m14 = m14 +parseFloat(diamond_cost);
+                       // m18 = m18 +parseFloat(diamond_cost);
+                        //plat = plat +parseFloat(diamond_cost);
                         //alert(m14);
                         var tbody = '';
                         tbody = tbody +'<th scope="row">'+setting_cost+'</th>';
@@ -245,7 +270,6 @@
                                         <img id="styleimage" src="/images/MCP.jpg" width="440" height="440" alt="noimage"/>
                         </div>
                         <div class="col-sm-4 col-lg-3">
-                                
                                         <div class="form-group">
                                                 <label  for="st_select" >Choose Ring style <b>:</b></label>
                                                 <select id="st_select" name="ringstyle" class="form-control" onchange = "imagechange()">
