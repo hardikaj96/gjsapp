@@ -166,6 +166,7 @@
                         }
                 function estimate(){
                         //alert(ring_style);
+                        var gwt = [0,0];
                         var i=0;
                         var gold = 1200;
                         var st = document.getElementById('st_select').value;
@@ -178,22 +179,24 @@
                         //alert(ss);
                         var ds = document.getElementById('diamond_style').value;
                         //alert(ds);
-                
+                        var tcw = document.getElementById('total_carat_weight').value;
                         //alert(ds);
                         //fsv = fsv * 3.14;
-                        var d_radius=fsv/2;
+                        var d_radius=fsv/(2)       ;
                         //alert(fsv);
                         var inner_area = (3.14 * d_radius * d_radius);
                         //alert(inner_area);
-                        var temp = (1+d_radius)+parseFloat(dsv) ;
+                        var temp = (d_radius+0.7*parseFloat(dsv)+0.8) ;
                         var outer_area = (3.14 * temp * temp);
                         //alert(outer_area + 'outer area');
                         var total_area = outer_area - inner_area;
                        // alert(total_area);
-                        var fsvolume = total_area * (parseFloat(dsv)+0.5);
+                        var fsvolume = total_area * (parseFloat(dsv)+0.3);
                         //alert(fsvolume);
-                        var gwt = (fsvolume * 0.019 * 14)/24;
-                        alert(gwt);
+                        fsvolume = (fsvolume * 0.0193 );
+                        gwt[0] = fsvolume * 14/24;
+                        gwt[1] = fsvolume * 18/24;
+                        //alert(gwt[0]+' gold weight');
                         var gcost = gold *1.02*0.0188;
                         //alert(gcost + ' gcost');
                         //alert(st);
@@ -223,11 +226,11 @@
                                         loc = i;
                         }
                         if(ds == 'VS2_SI1')
-                                diamond_cost = VS2_SI1[loc]*ss;
+                                diamond_cost = VS2_SI1[loc]*tcw;
                         if(ds == 'SI2')
-                                diamond_cost = SI2[loc]*ss;
+                                diamond_cost = SI2[loc]*tcw;
                         if(ds == 'Color')
-                                diamond_cost = Color[loc]*ss;
+                                diamond_cost = Color[loc]*tcw;
                         //alert(diamond_cost);
                         var polish = 20;
                         var setting_cost = Math.floor(ss * dst + polish);
@@ -235,11 +238,11 @@
                         var labor =6.5;
                         var metal_factor = 1.05;
                         var metal_weight=1.05;
-                        var m14 = Math.floor((gcost + labor) * metal_factor * metal_weight * gwt );
+                        var m14 = Math.floor((gcost + labor) * metal_factor * metal_weight * gwt[0] );
                         //alert(m14);
-                        var m18 =Math.floor((gcost*(18/14) + labor) * metal_factor * metal_weight * gwt *1.4) ;
+                        var m18 =Math.floor((gcost*(18/14) + labor) * metal_factor * metal_weight * gwt[1]  );
                         //alert(m18);
-                        var plat = Math.floor(gwt * 1.85 * 50);
+                        var plat = Math.floor(fsvolume * 1.85 * 50);
                         //alert(plat);
                         //m14 = m14 +parseFloat(diamond_cost);
                        // m18 = m18 +parseFloat(diamond_cost);
