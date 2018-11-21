@@ -18,9 +18,18 @@
               <li class="nav-item">
                 <a class="nav-link" href="/costs">Costs</a>
               </li>
+              @if (Auth::user() && Auth::user()->is_admin == 1)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a> 
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users">Users</a> 
+                </li>
+                @endif
               <li class="nav-item">
-                <a class="nav-link" href="/about">About Us</a>
+                <a class="nav-link" href="http://www.gjsusa.com">About Us</a>
               </li>
+                
             </ul>      
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -29,11 +38,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
-                    <li class="nav-item">
-                        @if (Route::has('register'))
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        @endif
-                    </li>
+                    
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

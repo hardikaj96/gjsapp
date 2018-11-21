@@ -12,12 +12,12 @@
 */
 
 
+Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/','PagesController@index');
 Route::get('/about','PagesController@about');
-Route::get('/admin','EstimateController@index')->name('admin');
-Route::get('/admin','CostsController@admin')->name('admin');
-Route::resource('costs','CostsController');
+Route::get('/users','PagesController@users');
 
-Auth::routes();
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::get('/users/{id}','PagesController@delete');
+Route::get('/costs','CostsController@index')->middleware('auth');

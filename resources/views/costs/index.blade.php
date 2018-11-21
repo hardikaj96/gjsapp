@@ -1,6 +1,7 @@
 @extends('layouts.app1')
 @section('content')
         @include('footer')
+        
         <script>
                 var Color = window.Color;
                 var SI2 = window.SI2;
@@ -48,16 +49,7 @@
                                 el.value = opt;
                                 select1.appendChild(el);
                         }
-                        /*select2.options.length = 0;
-                        for(var i = 0; i < ring_style.length; i++) {
-                                var opt = ring_style[i];
-                                var el = document.createElement("option");
-                                el.textContent = opt;
-                                el.value = opt;
-                                select2.appendChild(el);
-                        }*/
                         pcselected = document.getElementById('cover_select').value;
-                        
                         draw(pcselected);
                         total_ct();
                         estimate();
@@ -77,8 +69,8 @@
                         ps.options[loc].selected = true;
                         pcselected = document.getElementById('cover_select').value;
                         draw(pcselected);
-                        estimate();
                         total_ct();
+                        estimate();
                 } 
                 function cover_to_stone(){
                         var selected_cover = document.getElementById('cover_select').value;
@@ -95,8 +87,8 @@
                         ss.options[loc].selected = true;
                         pcselected = document.getElementById('cover_select').value;
                         draw(pcselected);
-                        estimate();
                         total_ct();
+                        estimate();
                 }
                 function imagechange(){
                         var x = document.getElementById("styleimage");
@@ -131,82 +123,55 @@
                         pcselect = (pcselect*Math.PI)/100;
                         var canvas = document.getElementById('myCanvas');
                         var context = canvas.getContext('2d');
-                        var x = 175;
-                        var y = 130;
-                        var radius = 110;
+                        canvas.style.width='100%';
+                        canvas.style.height='100%';
+                        canvas.width  = canvas.offsetWidth;
+                        canvas.height = canvas.offsetHeight;
+                        var x = canvas.width/2;
+                        var y = canvas.height/2;
+                        var radius = x<y?x:y;
                         var startAngle = 1.5 * Math.PI - pcselect;
                         var endAngle = 1.5 * Math.PI + pcselect;
                         var counterClockwise = false;
                         context.beginPath();
-                        context.arc(x, y, 120, 0, 2*Math.PI, counterClockwise);
+                        context.arc(x, y, radius, 0, 2*Math.PI, counterClockwise);
                         context.lineWidth = 0;
                         context.fillStyle = '#BFB6B4';
                         context.fill();
                         context.beginPath();
-                        context.arc(x, y, 100, 0, 2*Math.PI, counterClockwise);
+                        context.arc(x, y, radius-14, 0, 2*Math.PI, counterClockwise);
                         context.lineWidth = 0;
                         context.fillStyle = 'white';
                         context.fill();
                         context.beginPath();
-                        context.arc(x, y, 110, startAngle, endAngle, counterClockwise);
-                        context.lineWidth = 20;
+                        context.arc(x, y, radius-7, startAngle, endAngle, counterClockwise);
+                        context.lineWidth = 14;
                         context.strokeStyle = 'Red';
                         context.stroke();
                 }
-                function strcmp(a, b) {
-                        
-                        alert(a.toString() + ' gg ' + b.toString());
-                        if (a.toString() == b.toString()){
-                                alert('equals');
-                                return 0;
-                        } 
-                        if (a.toString() > b.toString()) return 1;
-                        alert(a.toString() + ' gg ' + b.toString());
-                        return -1;
-                        }
                 function estimate(){
-                        //alert(ring_style);
                         var gwt = [0,0];
                         var i=0;
                         var gold = 1200;
                         var st = document.getElementById('st_select').value;
-                        //alert(st);
                         var fsv = document.getElementById('fs_select').value;
-                        //alert(fsv);
                         var dsv = document.getElementById('cs_select').value;
-                        //alert(dsv);
                         var ss = document.getElementById('stone_select').value;
-                        //alert(ss);
                         var ds = document.getElementById('diamond_style').value;
-                        //alert(ds);
                         var tcw = document.getElementById('total_carat_weight').value;
-                        //alert(ds);
-                        //fsv = fsv * 3.14;
                         var d_radius=fsv/(2)       ;
-                        //alert(fsv);
                         var inner_area = (3.14 * d_radius * d_radius);
-                        //alert(inner_area);
                         var temp = (d_radius+0.7*parseFloat(dsv)+0.8) ;
                         var outer_area = (3.14 * temp * temp);
-                        //alert(outer_area + 'outer area');
                         var total_area = outer_area - inner_area;
-                       // alert(total_area);
                         var fsvolume = total_area * (parseFloat(dsv)+0.3);
-                        //alert(fsvolume);
                         fsvolume = (fsvolume * 0.0193 );
                         gwt[0] = fsvolume * 14/24;
                         gwt[1] = fsvolume * 18/24;
-                        //alert(gwt[0]+' gold weight');
                         var gcost = gold *1.02*0.0188;
-                        //alert(gcost + ' gcost');
-                        //alert(st);
                         var loc=0;
                         for(i=0;i<ring_style.length;i++){
-                                //alert(ring_style[i+1]+' hi '+st);
-                                //var n = strcmp(ring_style[i],st);
-                                //alert(ring_style[i].toString() + ' ss ' + st.toString());
                                 var n=st.toString().localeCompare(ring_style[i].toString());
-                                //alert(n);
                                 if(n===0){
                                         loc=i;
                                         break;
@@ -215,7 +180,6 @@
                                         continue;
                         }
                         dst = costs[loc];
-                        //alert(dst);
                         var diamond_cost=0;
                         var ps = document.getElementById('cs_select');
                         var po = ps.options;
@@ -231,23 +195,17 @@
                                 diamond_cost = SI2[loc]*tcw;
                         if(ds == 'Color')
                                 diamond_cost = Color[loc]*tcw;
-                        //alert(diamond_cost);
                         var polish = 20;
                         var setting_cost = Math.floor(ss * dst + polish);
-                        //alert(setting_cost);
                         var labor =6.5;
                         var metal_factor = 1.05;
                         var metal_weight=1.05;
                         var m14 = Math.floor((gcost + labor) * metal_factor * metal_weight * gwt[0] );
-                        //alert(m14);
                         var m18 =Math.floor((gcost*(18/14) + labor) * metal_factor * metal_weight * gwt[1]  );
-                        //alert(m18);
-                        var plat = Math.floor(fsvolume * 1.85 * 50);
-                        //alert(plat);
-                        //m14 = m14 +parseFloat(diamond_cost);
-                       // m18 = m18 +parseFloat(diamond_cost);
-                        //plat = plat +parseFloat(diamond_cost);
-                        //alert(m14);
+                        var plat = Math.floor(fsvolume * 1.85 * 50 * 0.65);
+                        m14 = Math.floor(m14 +parseFloat(diamond_cost*tcw));
+                        m18 = Math.floor(m18 +parseFloat(diamond_cost*tcw));
+                        plat = Math.floor(plat +parseFloat(diamond_cost*tcw));
                         var tbody = '';
                         tbody = tbody +'<th scope="row">'+setting_cost+'</th>';
                         tbody = tbody +'<td>'+m14+'</td>';
@@ -266,13 +224,13 @@
                 <b>       
                 <p id="text5"></p>
                 <div class="row">
-                        <div class="col-sm-4 col-lg-5">
+                        <div class="col-sm-4 col-md-4 col-lg-5">
                                         <div class="text-light bg-dark text-center">
                                                         <h1> <b><span id='main_title' class="label label-info">MCP</span></b></h1>
                                         </div>
-                                        <img id="styleimage" src="/images/MCP.jpg" width="440" height="440" alt="noimage"/>
+                                        <img id="styleimage" src="/images/MCP.jpg" width="100%"  alt="noimage"/>
                         </div>
-                        <div class="col-sm-4 col-lg-3">
+                        <div class="col-sm-4 col-lg-3  col-md-4">
                                         <div class="form-group">
                                                 <label  for="st_select" >Choose Ring style <b>:</b></label>
                                                 <select id="st_select" name="ringstyle" class="form-control" onchange = "imagechange()">
@@ -318,8 +276,8 @@
                                                 </select>
                                         </div>
                                         <div class="form-group">
-                                                <label class="mr-sm-2" for="total_carat_weight">Total carat weight <b>:</b></label>
-                                                <b><input type="text" name="total_carat" class="form-control" value="" id="total_carat_weight" readonly></b><br>
+                                                <label class="mr-sm-2" for="total_carat_weight">Total carat weight <b>:</b><br><SMALL><font color="red">Weight of stones is approximately <span>&#177;</span>0.03</font></small></label>
+                                                <b><input type="text" name="total_carat" class="form-control" value="" id="total_carat_weight" readonly></b>
                                         </div>
                                         <div class="form-group">
                                                 <label class="mr-sm-2" for="diamond_style">Select Diamond Style <b>:</b></label>
@@ -331,20 +289,20 @@
                                         </div>
                                 
                         </div>
-                        <div class="col-sm-4 col-lg-4">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
                                 <div class="form-group">
                                         
-                                                <canvas id="myCanvas" width="400" height="250"></canvas>
+                                                <canvas id="myCanvas"></canvas>
                                         
                                 </div>
                                 <div class="form-group">
                                         <div class='text-center'>
                                         <div class="border rounded">
-                                                <H3>Estimated Prices</H3>
-                                                <table class="table">
+                                                <H3><b>Estimated Prices</b></H3>
+                                                <table class="table table-hover table-striped table-bordered">
                                                         
                                                         <thead>
-                                                                <tr>
+                                                                <tr class="danger">
                                                                 <th scope="col">Setting Cost</th>
                                                                 <th scope="col">14K</th>
                                                                 <th scope="col">18K</th>
@@ -360,8 +318,8 @@
                                         <br>
                                         <div class="border rounded">
                                                 
-                                                <H3>Total Cost</H3>
-                                                <table class="table">
+                                                <H3><b>Total Costs</b></H3>
+                                                <table class="table table-hover table-striped table-bordered">
                                                         <thead>
                                                                 <tr>
                                                                 <th scope="col">14K</th>
