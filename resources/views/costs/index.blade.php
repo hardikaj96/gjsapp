@@ -113,8 +113,8 @@
                         var n = nmm.indexOf('-');
                         var m = nmm.indexOf('c');
                         var nm = nmm.substring(n+1,m);
-                        var select1 = document.getElementById('stone_select').value;
-                        document.getElementById('total_carat_weight').value =  (select1 *nm) ;
+                        var select1 = document.getElementById('stone_select').value * nm;
+                        document.getElementById('total_carat_weight').value =  +(Math.round(select1 + "e+3")  + "e-3");
                         //('\xB1')+' '
                         
                 }
